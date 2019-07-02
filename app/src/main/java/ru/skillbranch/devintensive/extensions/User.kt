@@ -1,11 +1,11 @@
-package ru.skillbranch.dev_intensive.extensions
+package ru.skillbranch.devintensive.extensions
 
 import kotlinx.android.synthetic.*
-import ru.skillbranch.dev_intensive.Utils.Utils
-import ru.skillbranch.dev_intensive.models.User
-import ru.skillbranch.dev_intensive.models.UserView
+import ru.skillbranch.devintensive.Utils.Utils
+import ru.skillbranch.devintensive.models.User
+import ru.skillbranch.devintensive.models.UserView
 
-fun User.toUserView(): UserView{
+fun User.toUserView(): UserView {
 
     val nickName = Utils.transliteration("$firstName $lastName")
     val initials = Utils.toInitials(firstName, lastName)

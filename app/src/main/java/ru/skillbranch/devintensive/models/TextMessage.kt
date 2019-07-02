@@ -1,12 +1,12 @@
-package ru.skillbranch.dev_intensive.models
+package ru.skillbranch.devintensive.models
 
-import ru.skillbranch.dev_intensive.extensions.humanizeDiff
+import ru.skillbranch.devintensive.extensions.humanizeDiff
 import java.util.*
 
 class TextMessage(
     id:String,
-    from:User?,
-    chat:Chat,
+    from: User?,
+    chat: Chat,
     isIncoming:Boolean = false,
     date:Date = Date(),
     var text: String?

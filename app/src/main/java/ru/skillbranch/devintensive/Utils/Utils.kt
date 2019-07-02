@@ -1,4 +1,4 @@
-package ru.skillbranch.dev_intensive.Utils
+package ru.skillbranch.devintensive.Utils
 
 /*Реализуй метод Utils.toInitials(firstName lastName) принимающий в качестве аргументов
 имя и фамилию пользователя (null, пустую строку) и возвращающий строку с первыми буквами
