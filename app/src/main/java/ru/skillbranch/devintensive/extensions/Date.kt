@@ -105,5 +105,15 @@ enum class TimeUnits{
     SECOND,
     MINUTE,
     HOUR,
-    DAY
+    DAY;
+
+    fun plural(value: Int):String {
+        val temp: Long = when (this) {
+            SECOND -> value * ru.skillbranch.devintensive.extensions.SECOND
+            MINUTE -> value * ru.skillbranch.devintensive.extensions.MINUTE
+            HOUR -> value * ru.skillbranch.devintensive.extensions.HOUR
+            DAY -> value * ru.skillbranch.devintensive.extensions.DAY
+        }
+        return "${formatResult(temp, this)}"
+    }
 }
