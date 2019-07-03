@@ -1,7 +1,6 @@
 package ru.skillbranch.devintensive.extensions
 
-import kotlinx.android.synthetic.*
-import ru.skillbranch.devintensive.Utils.Utils
+import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.models.User
 import ru.skillbranch.devintensive.models.UserView
 
@@ -9,7 +8,7 @@ fun User.toUserView(): UserView {
 
     val nickName = Utils.transliteration("$firstName $lastName")
     val initials = Utils.toInitials(firstName, lastName)
-    val status = if(lastVisit==null) "Ещу ни разу не был" else if (isOnline) "online" else "Последний раз был ${lastVisit.humanizeDiff()}"
+    val status = if(lastVisit==null) "Ещу ни разу не был" else if (isOnline) "online" else "Последний раз был ${lastVisit?.humanizeDiff()}"
 
     return UserView(
         id,

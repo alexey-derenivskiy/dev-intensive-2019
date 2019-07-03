@@ -27,49 +27,45 @@ fun Date.add(value:Int, units: TimeUnits = TimeUnits.SECOND): Date{
 }
 
 fun Date.humanizeDiff(date:Date = Date()): String{
-    val diff = this.time.minus(Date().time)
-    if (diff>0)
-        diff.plus(SECOND)
-    else
-        diff.minus(SECOND)
+    var diff = this.time.minus(Date().time)
     return when(diff){
-        in 360* DAY..Long.MAX_VALUE  ->  "более года назад"
-        in 26* HOUR..360* DAY -> "${formatResult(
+        in 360* DAY..Long.MAX_VALUE  ->  "более чем через год"
+        in 26* HOUR..360* DAY -> "через ${formatResult(
             diff,
             TimeUnits.DAY
-        )} назад"
-        in 22* HOUR..26* HOUR -> "день назад"
-        in 75* MINUTE..22* HOUR -> "${formatResult(
+        )}"
+        in 22* HOUR..26* HOUR -> "завтра"
+        in 75* MINUTE..22* HOUR -> "через ${formatResult(
             diff,
             TimeUnits.HOUR
-        )} назад"
-        in 45* MINUTE..75* MINUTE -> "час назад"
-        in 75* SECOND..45* MINUTE -> "${formatResult(
+        )}"
+        in 45* MINUTE..75* MINUTE -> "через час"
+        in 75* SECOND..45* MINUTE -> "через ${formatResult(
             diff,
             TimeUnits.MINUTE
-        )} назад"
-        in 45* SECOND..75* SECOND -> "минуту назад"
-        in SECOND..45* SECOND -> "несколько секунд назад"
-        in 0..SECOND -> "только что"
+        )}"
+        in 45* SECOND..75* SECOND -> "через минуту"
+        in SECOND..45* SECOND -> "через несколько секунд"
+        in 0..SECOND -> "несколько секунд назад"
 
-        in -SECOND..0               -> "сейчаc"
-        in -45* SECOND..-1* SECOND -> "через несколько секунд"
-        in -75* SECOND..-45* SECOND -> "через минуту"
-        in -45* MINUTE..-75* SECOND -> "через ${formatResult(
+        in -SECOND..0               -> "только что"
+        in -45* SECOND..-1* SECOND -> "несколько секунд назад"
+        in -75* SECOND..-45* SECOND -> "минуту назад"
+        in -45* MINUTE..-75* SECOND -> "${formatResult(
             diff,
             TimeUnits.MINUTE
-        )}"
-        in -75* MINUTE..-45* MINUTE -> "через час"
-        in -22* HOUR..-75* MINUTE -> "через ${formatResult(
+        )} назад"
+        in -75* MINUTE..-45* MINUTE -> "час назад"
+        in -22* HOUR..-75* MINUTE -> "${formatResult(
             diff,
             TimeUnits.HOUR
-        )}"
-        in -26* HOUR..-22* HOUR -> "завтра"
-        in -360* DAY..-26* HOUR -> "через ${formatResult(
+        )} назад"
+        in -26* HOUR..-22* HOUR -> "день назад"
+        in -360* DAY..-26* HOUR -> "${formatResult(
             diff,
             TimeUnits.DAY
-        )}"
-        in Long.MIN_VALUE..-360* DAY -> "более чем через год"
+        )} назад"
+        in Long.MIN_VALUE..-360* DAY -> "более года назад"
         else -> "!!!!!!!!время задано неверно!!!!!!"
     }
 }
@@ -81,13 +77,11 @@ fun formatResult(value:Long, mark: TimeUnits): String{
         TimeUnits.MINUTE -> "${(value / MINUTE)}".toInt()
         TimeUnits.SECOND -> "${(value / SECOND)}".toInt()
     }
-    var remainder: Int = number % 10
-    if (number in 10..20)
-        remainder = 0
+    var remainder: Int = number % 20
     number = abs(number)
     remainder = abs(remainder)
-    var resultWord: String = when(remainder){
-        0, in 5..9 -> "${if(mark== TimeUnits.DAY) "дней"
+    var resultWord = when(remainder){
+        0, in 5..20 -> "${if(mark== TimeUnits.DAY) "дней"
                 else if(mark== TimeUnits.HOUR) "часов"
                 else if(mark== TimeUnits.MINUTE) "минут"
                 else if(mark== TimeUnits.SECOND) "секунд"

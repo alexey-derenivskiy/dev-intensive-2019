@@ -1,33 +1,41 @@
-package ru.skillbranch.devintensive.Utils
+package ru.skillbranch.devintensive.utils
 
-/*Реализуй метод Utils.toInitials(firstName lastName) принимающий в качестве аргументов
+/*Реализуй метод utils.toInitials(firstName lastName) принимающий в качестве аргументов
 имя и фамилию пользователя (null, пустую строку) и возвращающий строку с первыми буквами
 имени и фамилии в верхнем регистре (если один из аргументов null то вернуть один инициал,
 если оба аргумента null вернуть null)
 Пример:
-Utils.toInitials("john" ,"doe") //JD
-Utils.toInitials("John", null) //J
-Utils.toInitials(null, null) //null
-Utils.toInitials(" ", "") //null
+utils.toInitials("john" ,"doe") //JD
+utils.toInitials("John", null) //J
+utils.toInitials(null, null) //null
+utils.toInitials(" ", "") //null
 */
 
 object Utils {
     fun parseFullName(fullname:String?):Pair<String?, String?> {
-        if (fullname.isNullOrBlank())
-            return "null" to "null"
-        val firstName : String? = fullname?.split(" ")?.getOrNull(0)?:"null"
-        val lastName : String? = fullname?.split(" ")?.getOrNull(1)?:"null"
-        return firstName to lastName
+        if (fullname.isNullOrBlank()) return null to null
+        var list : List<String>? = fullname?.trim()?.split(" ", ignoreCase = true, limit = 2)
+        var fn: String? = list?.getOrNull(0)?.trim()
+        var ln: String? = list?.getOrNull(1)?.trim()
+        return fn to ln
     }
 
-    fun toInitials(firstName:String?, lastName:String?) : String {
-        val fn:String = "${if(firstName.isNullOrBlank()) "null" else "${firstName.substring(0,1)}"}"
-        val ln:String = "${if(lastName.isNullOrBlank()) "null" else "${lastName.substring(0,1)}"}"
+    fun toInitials(firstName:String?, lastName:String?) : String? {
+        val fn:String? = when{
+            firstName.isNullOrBlank() -> null
+            else -> "${firstName?.substring(0,1)}"
+        }
+
+        val ln:String? = when{
+            lastName.isNullOrBlank() -> null
+            else -> "${lastName?.substring(0,1)}"
+        }
+
         return when{
-            fn=="null" && ln=="null" -> "null"
-            fn == "null"             -> ln.toUpperCase()
-            ln == "null"             -> fn.toUpperCase()
-            else                     -> fn.toUpperCase()+ln.toUpperCase()
+            fn==null && ln==null    -> null
+            fn == null              -> ln?.toUpperCase()
+            ln == null              -> fn?.toUpperCase()
+            else                    -> fn?.toUpperCase()+ln?.toUpperCase()
         }
     }
 
@@ -87,9 +95,9 @@ object Utils {
                 'Ш' ->  result += "Sh"
                 'щ' ->  result += "sh'"
                 'Щ' ->  result += "Sh'"
-                'ь', 'Ь' ->  result += ""
-                'ъ', 'Ъ' ->  result += ""
-                'ы', 'Ы' ->  result += "i"
+                'ь', 'Ь', 'ъ', 'Ъ' ->  result += ""
+                'ы' ->  result += "i"
+                'Ы' ->  result += "I"
                 'э' ->  result += "e"
                 'Э' ->  result += "E"
                 'ю' ->  result += "yu"
