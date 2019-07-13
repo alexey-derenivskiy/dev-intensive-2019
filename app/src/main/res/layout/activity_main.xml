@@ -22,7 +22,7 @@
             android:id="@+id/iv_bender"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:src="@drawable/bender_1"
+            android:src="@drawable/bender_dance"
             android:layout_weight="1"/>
 
     <LinearLayout
@@ -45,6 +45,7 @@
                 android:paddingBottom="@dimen/spacing_normal_16"
                 android:layout_marginLeft="@dimen/spacing_normal_16"
                 android:layout_marginRight="@dimen/spacing_normal_16"
+                android:imeOptions="actionDone"
         />
 
         <ImageView
@@ -53,9 +54,8 @@
                 android:layout_height="@dimen/image_button_size_24"
                 android:src="@drawable/ic_send_black_24dp"
                 android:layout_gravity="center"
-                android:layout_marginRight="@dimen/spacing_normal_16"
-
-        />
+                android:layout_marginEnd="@dimen/spacing_normal_16"
+                 />
 
     </LinearLayout>
 </LinearLayout>

@@ -14,21 +14,21 @@ utils.toInitials(" ", "") //null
 object Utils {
     fun parseFullName(fullname:String?):Pair<String?, String?> {
         if (fullname.isNullOrBlank()) return null to null
-        var list : List<String>? = fullname?.trim()?.split(" ", ignoreCase = true, limit = 2)
-        var fn: String? = list?.getOrNull(0)?.trim()
-        var ln: String? = list?.getOrNull(1)?.trim()
+        val list : List<String>? = fullname?.trim()?.split(" ", ignoreCase = true, limit = 2)
+        val fn: String? = list?.getOrNull(0)?.trim()
+        val ln: String? = list?.getOrNull(1)?.trim()
         return fn to ln
     }
 
     fun toInitials(firstName:String?, lastName:String?) : String? {
         val fn:String? = when{
             firstName.isNullOrBlank() -> null
-            else -> "${firstName?.substring(0,1)}"
+            else -> firstName?.substring(0,1)
         }
 
         val ln:String? = when{
             lastName.isNullOrBlank() -> null
-            else -> "${lastName?.substring(0,1)}"
+            else -> lastName?.substring(0,1)
         }
 
         return when{
@@ -40,7 +40,7 @@ object Utils {
     }
 
     fun transliteration(payload: String, divider:String=" "): String {
-        var result: String = ""
+        var result = ""
         for (s in payload){
             when(s) {
                 'а' ->  result += "a"

@@ -12,12 +12,18 @@ class Bender(var status:Status = Status.NORMAL, var question:Question = Question
     }
 
     fun listenAnswer(answer:String) : Pair<String, Triple<Int, Int, Int>>{
-        if(question.answer.contains(answer)){
-            question = question.nextQuesion()
-            return "Отлично - это правильный ответ!\n${question.question}" to status.color
+        //Если ответ правильный
+        return if(question.answer.contains(answer)){
+            question = question.nextQuestion()
+            "Отлично - ты справился!\n${question.question}" to status.color
+        //если ответ НЕ правильный
         }else{
             status = status.nextStatus()
-            return "Это не правильный ответ!\n${question.question}" to status.color
+            if (status==Status.NORMAL){
+                question = Question.NAME
+                "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
+            }
+            "Это неправильный ответ!\n${question.question}" to status.color
         }
     }
 
@@ -25,7 +31,7 @@ class Bender(var status:Status = Status.NORMAL, var question:Question = Question
         NORMAL(Triple(255,255,255)),
         WARNING(Triple(255,120,0)),
         DANGER(Triple(255,60,60)),
-        CRITICAL(Triple(255,255,0));
+        CRITICAL(Triple(255,0,0));
 
         fun nextStatus():Status{
             return if(this.ordinal < values().lastIndex){
@@ -37,25 +43,25 @@ class Bender(var status:Status = Status.NORMAL, var question:Question = Question
     }
 
     enum class Question(val question:String, val answer:List<String>){
-        NAME("Как меня зовут?", listOf("бендер", "bender")) {
-            override fun nextQuesion():Question = PROFESSION
+        NAME("Как меня зовут?", listOf("Бендер", "bender")) {
+            override fun nextQuestion():Question = PROFESSION
         },
         PROFESSION("Нозови мою профессию?", listOf("сгибальщик", "bender")){
-            override fun nextQuesion():Question = MATERIAL
+            override fun nextQuestion():Question = MATERIAL
         },
         MATERIAL("Из чего я сделан?", listOf("металл", "дерево", "metal", "iron", "wood")){
-            override fun nextQuesion():Question = BDAY
+            override fun nextQuestion():Question = BDAY
         },
         BDAY("Когда меня создали?", listOf("2993")){
-            override fun nextQuesion():Question = SERIAL
+            override fun nextQuestion():Question = SERIAL
         },
         SERIAL("Мой серийный номер?", listOf("2716057")){
-            override fun nextQuesion():Question = IDLE
+            override fun nextQuestion():Question = IDLE
         },
         IDLE("На этом все, вопросов больше нет", listOf()){
-            override fun nextQuesion():Question = IDLE
+            override fun nextQuestion():Question = IDLE
         };
 
-        abstract fun nextQuesion():Question
+        abstract fun nextQuestion():Question
     }
 }
