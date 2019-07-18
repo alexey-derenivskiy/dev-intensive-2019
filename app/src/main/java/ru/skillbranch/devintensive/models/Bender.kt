@@ -15,6 +15,7 @@ class Bender(var status:Status = Status.NORMAL, var question:Question = Question
 
     fun listenAnswer(answer:String) : Pair<String, Triple<Int, Int, Int>>{
         val validator = isValidAnswer(question, answer)
+
         if (validator.isNullOrBlank()){
             return when{
                 question.answer.contains(answer) -> {question = question.nextQuestion()
@@ -76,13 +77,13 @@ class Bender(var status:Status = Status.NORMAL, var question:Question = Question
 
     private fun isValidAnswer(question: Question, answer: String) : String{
         return when(question){
-            Question.NAME -> if (answer[0].isUpperCase()) ""
+            Question.NAME -> if (Regex("""^[A-ZА-ЯЁ][a-zа-яё]?""").matches(answer)) ""
             else "Имя должно начинаться с заглавной буквы"
             Question.BDAY -> if (answer.isDigitsOnly()) ""
             else "Год моего рождения должен содержать только цифры"
             Question.MATERIAL -> if (Regex("""[^0-9]+""").matches(answer)) ""
             else "Материал не должен содержать цифр"
-            Question.PROFESSION -> if (!answer[0].isUpperCase()) ""
+            Question.PROFESSION -> if (Regex("""^[a-zа-яё].*""").matches(answer)) ""
             else "Профессия должна начинаться со строчной буквы"
             Question.SERIAL -> if (Regex("""[0-9]{7}""").matches(answer)) ""
             else "Серийный номер содержит только цифры, и их 7"
