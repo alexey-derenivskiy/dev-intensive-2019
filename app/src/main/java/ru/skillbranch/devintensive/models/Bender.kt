@@ -77,13 +77,13 @@ class Bender(var status:Status = Status.NORMAL, var question:Question = Question
 
     private fun isValidAnswer(question: Question, answer: String) : String{
         return when(question){
-            Question.NAME -> if (Regex("""^[A-ZА-ЯЁ][a-zа-яё]?""").matches(answer)) ""
+            Question.NAME -> if (answer.isNotEmpty() && answer[0].isUpperCase()) ""
             else "Имя должно начинаться с заглавной буквы"
             Question.BDAY -> if (answer.isDigitsOnly()) ""
             else "Год моего рождения должен содержать только цифры"
             Question.MATERIAL -> if (Regex("""[^0-9]+""").matches(answer)) ""
             else "Материал не должен содержать цифр"
-            Question.PROFESSION -> if (Regex("""^[a-zа-яё].*""").matches(answer)) ""
+            Question.PROFESSION -> if (answer.isNotEmpty() && !answer[0].isUpperCase()) ""
             else "Профессия должна начинаться со строчной буквы"
             Question.SERIAL -> if (Regex("""[0-9]{7}""").matches(answer)) ""
             else "Серийный номер содержит только цифры, и их 7"
